@@ -1,0 +1,10 @@
+langgraph
+langchain
+langchain-anthropic
+anthropic
+pydantic
+python-dotenv
+docker
+pytest
+groq
+PyGithub
