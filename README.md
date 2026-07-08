@@ -184,11 +184,7 @@ If the Critic's LLM response fails to parse as valid JSON, the system defaults t
 
 ## Known Limitations
 
-- **Network-disabled sandbox**: Tasks requiring live HTTP calls (e.g., testing an API client) cannot be fully execution-verified, since the sandbox has no network access. The Critic can still reason about correctness from the traceback context, but true end-to-end network testing would require a more permissive (and less safe) sandbox mode.
-- **Single-file scope**: The agent currently generates and tests a single Python file/function per task. It does not yet handle multi-file changes across an existing codebase.
-- **Sandbox dependencies**: The custom Docker image (`agent-sandbox`) only pre-installs a small set of common libraries (`requests`, `pytest`). Tasks requiring other third-party packages will fail at execution unless the image is extended.
-- **LLM non-determinism**: Because generation is LLM-based, code quality and whether a retry is triggered can vary between runs on the same task.
-
+- **Dynamic dependency installation trade-off**: The Executor detects third-party imports in generated code and installs them inside the container before running (falling back to a fully network-isolated run when no extra dependencies are needed). This means network access is temporarily enabled for runs with detected dependencies, which is a deliberate security/flexibility trade-off — full isolation is preserved whenever possible, but tasks needing new libraries require a brief network window to install them.
 ---
 
 ## Future Work
