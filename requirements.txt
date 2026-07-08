@@ -8,3 +8,5 @@ docker
 pytest
 groq
 PyGithub
+colorama
+stremlit
